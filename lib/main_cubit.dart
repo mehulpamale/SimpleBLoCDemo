@@ -53,7 +53,21 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: BlocBuilder<CounterCubit, CounterState>(
         builder: (context, state) {
-          return Text('${state.counterValue}');
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+            Text(
+              'Current Value is',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Text(
+              '${state.counterValue}',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+              ],
+            ),
+          );
         },
       ),
       floatingActionButton: Row(
