@@ -51,20 +51,31 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: BlocBuilder<CounterCubit, CounterState>(
+      body: BlocConsumer<CounterCubit, CounterState>(
+        listener: (context, state) {
+          if (state.wasIncremented) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: (Text('Incremented'))));
+          } else if (!state.wasIncremented) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: (Text('Decremented'))));
+          }
+        },
         builder: (context, state) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-            Text(
-              'Current Value is',
-              style: Theme.of(context).textTheme.headline6,
-            ),
-            Text(
-              '${state.counterValue}',
-              style: Theme.of(context).textTheme.headline6,
-            ),
+                Text(
+                  'Current Value is',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                Text(
+                  '${state.counterValue}',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
               ],
             ),
           );
